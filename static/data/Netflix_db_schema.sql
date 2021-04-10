@@ -5,6 +5,8 @@ DROP TABLE "OMDB_title_genre";
 DROP TABLE "OMDB_genre";
 DROP TABLE "OMDB_title_language";
 DROP TABLE "OMDB_language";
+DROP TABLE "title_cast";
+DROP TABLE "cast";
 DROP TABLE "Title";
 
 -- Schema Exported from QuickDBD: https://www.quickdatabasediagrams.com/
@@ -97,6 +99,23 @@ CREATE TABLE "OMDB_title_language" (
      )
 );
 
+CREATE TABLE "cast" (
+    "cast_no" int   NOT NULL,
+    "cast" varchar   NOT NULL,
+    CONSTRAINT "pk_cast" PRIMARY KEY (
+        "cast_no"
+     )
+);
+
+CREATE TABLE "title_cast" (
+    "cast_no" int   NOT NULL,
+    "show_id" int   NOT NULL,
+    CONSTRAINT "pk_title_cast" PRIMARY KEY (
+        "cast_no","show_id"
+     )
+);
+
+
 ALTER TABLE "OMDB_title_genre" ADD CONSTRAINT "fk_OMDB_title_genre_omdb_genre_no" FOREIGN KEY("omdb_genre_no")
 REFERENCES "OMDB_genre" ("omdb_genre_no");
 
@@ -113,4 +132,7 @@ ALTER TABLE "OMDB_title_language" ADD CONSTRAINT "fk_OMDB_title_language_languag
 REFERENCES "OMDB_language" ("language_no");
 
 ALTER TABLE "OMDB_title_language" ADD CONSTRAINT "fk_OMDB_title_language_show_id" FOREIGN KEY("show_id")
+REFERENCES "Title" ("show_id");
+
+ALTER TABLE "title_cast" ADD CONSTRAINT "fk_title_cast_show_id" FOREIGN KEY("show_id")
 REFERENCES "Title" ("show_id");
