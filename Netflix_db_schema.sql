@@ -1,11 +1,3 @@
---Drop existing tables
-DROP TABLE "Netflix_title_Listed_in";
-DROP TABLE "Netflix_Listed_in";
-DROP TABLE "OMDB_title_genre";
-DROP TABLE "OMDB_genre";
-DROP TABLE "OMDB_title_language";
-DROP TABLE "OMDB_language";
-DROP TABLE "Title";
 
 -- Schema Exported from QuickDBD: https://www.quickdatabasediagrams.com/
 -- merged OMDB and Netflix attributes into Title table
