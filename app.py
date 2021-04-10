@@ -16,7 +16,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
-SQLALCHEMY_DATABASE_URI = 'postgres+psycopg2://root:postgres@netflix.ct6oxwoiakb5.us-east-2.rds.amazonaws.com:5432/netflix'
+SQLALCHEMY_DATABASE_URI = 'postgres+psycopg2://{user}:{password}@netflix.ct6oxwoiakb5.us-east-2.rds.amazonaws.com:5432/netflix'
 app = Flask(__name__)
 #################################################
 # Database Setup
