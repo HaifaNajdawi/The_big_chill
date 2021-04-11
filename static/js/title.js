@@ -1,6 +1,9 @@
 let button = d3.select("#submit");
 
+// TODO
 let baseURL = "API address";
+
+
 let genre = "";
 let rating = "";
 let profit = "";
@@ -34,9 +37,9 @@ function runEnter() {
     tableBody.appendChild(row);
     document.getElementById("input_title").value = "";
 }
-
 function prediction(title){
     let url = baseURL+title
+    // TODO   
     // d3.json(url, function(response) {
         genre = "Prediction";
         rating = "B";
