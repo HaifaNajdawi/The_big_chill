@@ -16,6 +16,8 @@
     <!-- Custom styles for this template -->
     <!-- <link href="../static/css/jumbotron.css" rel="stylesheet"> -->
     <link href="../static/css/style.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    
 
 
   </head>
@@ -23,6 +25,7 @@
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <!-- TODO - link to index.html -->
       <a class="navbar-brand" href="#">The Big Chill</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,66 +33,66 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="deep_dive.html">Deep Dive</a>
           </li>
           <!-- <li class="nav-item"> -->
             <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
           <!-- </li> -->
           <li class="nav-item dropdown">
+              <!-- TODO - add dropdowns for members and sources???? -->
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Need a Dropdown?</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="#">Action</a>
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
-          
+         
       </div>
     </nav>
 
     <main role="main">
-      
+
       <!-- Main jumbotron for a primary marketing message or call to action -->
-      <img class="container-fluid no-padding" src="../static/image/join2.jpg">
-      <!-- <div class="jumbotron no-padding ">
-            <img src="../static/image/big_chill.jpg" >
-        </div> -->
+      <!-- <div class="jumbotron no-padding"> -->
+        <img class="container-fluid no-padding" src="../static/image/deep_dive2.jpg">
+        <!-- </div> -->
+       
         
-        <!-- Example row of columns -->
+        
         <div class="container">
-        <div class="row">
-          <div class="col-md-4" id="graph1">
-            <h2>Container for a graph</h2>
-            <img class="img-fluid" src="http://journeyededucation.com/uploads/3/4/8/5/34854805/graphing-movie-cover_orig.jpg">
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4" id="graph2">
-            <h2>Container for Favorite words</h2>
-            <img class="img-fluid" src="https://i.dlpng.com/static/png/5405904-netflix-and-chill-the-complete-history-of-a-viral-sex-catchphrase-netflix-and-chill-png-800_450_preview.png">
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-4" id="graph3">
-            <h2>Container for something else</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/tCN6FeQ6xYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-        </div>
-
-        <hr>
-
-      </div> <!-- /container -->
-
-    </main>
-
-    <footer class="container">
-      <p>The Chill Crew aka: April, Haifa, Julia, Melanie</p>
-    </footer>
+            <div class="row">
+                <div class="col-md-12">
+        <form id="form" onSubmit="return false;">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Enter your Movie Title</label>
+                <!-- TODO - add a character limit -->
+                <input type="text" class="form-control" id="input_title" aria-describedby="emailHelp" placeholder="Enter Title">
+            </div>
+            <button id="submit" type="button" class="btn btn-primary">Submit</button>
+        </form>
+        <br>
+        <br><hr>
+        <h4>Prediction of your next big show</h4>
+        <br>
+        
+        <table id="mytable" class="table">
+            <thead><tr class="tableizer-firstrow">
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Rating</th>
+                <th>Gross Profit</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- <tr><td>The Big Chill</td><td>Comedy</td><td>R</td><td>$56.4 million</td></tr> -->
+        </tbody></table>
+                </div>
+            </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -97,5 +100,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>   
-  </body>
+    <script src="../static/js/title.js"></script> 
+</body>
 </html>

@@ -1,0 +1,47 @@
+body {
+  padding-top: 3.5rem;
+}
+
+/* table.tableizer-table {
+    font-size: 36px;
+    border: 1px solid #CCC; 
+    font-family: Arial, Helvetica, sans-serif;
+}  */
+.table th {
+    background-color: #77797a; 
+    color: #FFF;
+   
+}
+
+.tableizer-table td {
+    padding: 4px;
+    margin: 3px;
+    border: 1px solid #CCC;
+    text-align: justify;
+}
+
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-padding {
+padding: 0;
+}
+
+.img {
+width: 400px;
+height: 300px;
+object-fit: fill;
+} 
+.jumbotron {
+
+border-bottom:1px solid #ff6a00;
+}
+
+/* .container {
+    height:400px;
+    width:400px;
+
+    } */
