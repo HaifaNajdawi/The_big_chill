@@ -10,12 +10,13 @@ from flask import (
     redirect,
     send_from_directory)
 import numpy as np
-
+from config import username, password
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
-
+import sys
+import boto3
 SQLALCHEMY_DATABASE_URI = 'postgres+psycopg2://root:postgres@netflix.ct6oxwoiakb5.us-east-2.rds.amazonaws.com:5432/netflix'
 app = Flask(__name__)
 #################################################
@@ -23,6 +24,24 @@ app = Flask(__name__)
 #################################################
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
+ENDPOINT="netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com"
+PORT="5432"
+USR=username
+PASSWORD = password
+REGION="us-east-1"
+DBNAME="mydb"
+#gets the credentials from .aws/credentials
+session = boto3.Session(profile_name='RDSCreds')
+client = session.client('rds')
+token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USR, Region=REGION)
+try:
+    conn = psycopg2.connect(host=ENDPOINT, port=PORT, database=DBNAME, user=USR, password=token)
+    cur = conn.cursor()
+    cur.execute("""SELECT now()""")
+    query_results = cur.fetchall()
+    print(query_results)
+except Exception as e:
+    print("Database connection failed due to {}".format(e))             
 # reflect an existing database into a new model
 Base = automap_base()
 # reflect the tables
@@ -45,7 +64,8 @@ db = SQLAlchemy(app)
 # from boto.s3.connection import S3Connection
 # s3 = S3Connection(os.environ['API_KEY'], os.environ['API_KEY_SECRET'])
 # API_KEY = app.config['API_KEY']
-
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 
 @app.route("/")
 def home():
@@ -66,7 +86,7 @@ def sources():
 @app.route('/static/<path:path>')
 def send_js(path):
     return send_from_directory('static', path)
-    
+
 # @app.route("/timelapse")
 # def timelapse():
 #     details = get_timelapse()
