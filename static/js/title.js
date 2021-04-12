@@ -30,12 +30,13 @@ function runEnter() {
     td3.innerHTML = rating;
     td4.innerHTML = profit;
 
-    row.appendChild(td1);
+    row.appendChild(td1).className="d-inline-block text-truncate";
     row.appendChild(td2);
     row.appendChild(td3);
     row.appendChild(td4);
     tableBody.appendChild(row);
     document.getElementById("input_title").value = "";
+    
 }
 function prediction(title){
     let url = baseURL+title
