@@ -20,7 +20,7 @@ import sys
 #import boto3
 
 #SQLALCHEMY_DATABASE_URI = os.getenv('THE_BIG_CHILL_DATABASE_URL') 
-SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://roo2:123456@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
+SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://{username}:{password}@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
 
 app = Flask(__name__)
 #################################################
