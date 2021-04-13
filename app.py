@@ -10,31 +10,46 @@ from flask import (
     redirect,
     send_from_directory)
 import numpy as np
-
+#from config import username, password
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
+import sys
+#import boto3
 
-SQLALCHEMY_DATABASE_URI = os.getenv('THE_BIG_CHILL_DATABASE_URL') 
+#SQLALCHEMY_DATABASE_URI = os.getenv('THE_BIG_CHILL_DATABASE_URL') 
+SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://roo2:123456@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
+
 app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
+#gets the credentials from .aws/credentials
+# session = boto3.Session(profile_name='')
+# client = session.client('')
+# token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USR, Region=REGION)
+# try:
+#     conn = psycopg2.connect(host=ENDPOINT, port=PORT, database=DBNAME, user=USR, password=PASSWORD)
+#     cur = conn.cursor()
+#     cur.execute("""SELECT now()""")
+#     query_results = cur.fetchall()
+#     print(query_results)
+# except Exception as e:
+#     print("Database connection failed due to {}".format(e))             
+
 # reflect an existing database into a new model
 Base = automap_base()
 # reflect the tables
 Base.prepare(engine=engine, reflect=True)
 
-db = SQLAlchemy(app)
-
 # TODO: new table references
-
-# Sites = create_classes_site(db)
-# County = create_classes_county(db)
-# CensusPopulation = create_classes_pop(db)
+Base.classes.keys()
+# Title = create_classes_site(db)
+# Cast = create_classes_county(db)
+# Language = create_classes_lang(db)
 # year = create_classes_year(db)
 # DateYear = create_classes_dateyear(db)
 # Defining_Parameter = create_classes_def_param(db)
@@ -42,10 +57,9 @@ db = SQLAlchemy(app)
 
 
 # # API KEY on HEROKU
-# from boto.s3.connection import S3Connection
-# s3 = S3Connection(os.environ['API_KEY'], os.environ['API_KEY_SECRET'])
-# API_KEY = app.config['API_KEY']
 
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 
 @app.route("/")
 def home():
@@ -66,7 +80,7 @@ def sources():
 @app.route('/static/<path:path>')
 def send_js(path):
     return send_from_directory('static', path)
-    
+
 # @app.route("/timelapse")
 # def timelapse():
 #     details = get_timelapse()
