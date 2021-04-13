@@ -1,4 +1,5 @@
 import os
+from typing import cast
 import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 from flask import (
@@ -45,18 +46,19 @@ Base = automap_base()
 # reflect the tables
 Base.prepare(engine=engine, reflect=True)
 
-# TODO: new table references
+# new table references
 Base.classes.keys()
-# Title = create_classes_site(db)
-# Cast = create_classes_county(db)
-# Language = create_classes_lang(db)
-# year = create_classes_year(db)
-# DateYear = create_classes_dateyear(db)
-# Defining_Parameter = create_classes_def_param(db)
-# AirQuality = create_classes_year(db)
+print(Base.classes.keys())
 
-
-# # API KEY on HEROKU
+netflix_listed_in = Base.classes.Netflix_Listed_in
+netflix_title_listed_in = Base.classes.Netflix_title_Listed_in
+omdb_genre = Base.classes.OMDB_genre
+OMDB_language = Base.classes.OMDB_language
+OMDB_title_language = Base.classes.OMDB_title_language
+OMDB_title_genre = Base.classes.OMDB_title_genre
+title = Base.classes.Title
+Cast = Base.classes.Cast
+title_cast = Base.classes.title_cast
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -69,6 +71,15 @@ def home():
 def index():
     return render_template("index.html")
 
+@app.route("/deep_dive")
+def sources():
+    return render_template("deep_dive.html")
+
+@app.route('/static/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
+
+# Leftover code -- if we want these pages
 @app.route("/members")
 def members():
     return render_template("members.html")
@@ -76,11 +87,6 @@ def members():
 @app.route("/sources")
 def sources():
     return render_template("sources.html")
-
-@app.route('/static/<path:path>')
-def send_js(path):
-    return send_from_directory('static', path)
-
 # @app.route("/timelapse")
 # def timelapse():
 #     details = get_timelapse()
