@@ -28,19 +28,6 @@ app = Flask(__name__)
 #################################################
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 
-#gets the credentials from .aws/credentials
-# session = boto3.Session(profile_name='')
-# client = session.client('')
-# token = client.generate_db_auth_token(DBHostname=ENDPOINT, Port=PORT, DBUsername=USR, Region=REGION)
-# try:
-#     conn = psycopg2.connect(host=ENDPOINT, port=PORT, database=DBNAME, user=USR, password=PASSWORD)
-#     cur = conn.cursor()
-#     cur.execute("""SELECT now()""")
-#     query_results = cur.fetchall()
-#     print(query_results)
-# except Exception as e:
-#     print("Database connection failed due to {}".format(e))             
-
 # reflect an existing database into a new model
 Base = automap_base()
 # reflect the tables
@@ -48,7 +35,6 @@ Base.prepare(engine=engine, reflect=True)
 
 # new table references
 Base.classes.keys()
-print(Base.classes.keys())
 
 netflix_listed_in = Base.classes.Netflix_Listed_in
 netflix_title_listed_in = Base.classes.Netflix_title_Listed_in
