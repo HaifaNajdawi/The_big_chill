@@ -28,7 +28,7 @@ def create_classes(db):
 
         def __repr__(self):
             return '<OMDB_language %r>' % (self.name)
-    return OMDB_title_language
+    return OMDB_language
 
     class Title(db.Model):
         __tablename__ = 'Title'
@@ -54,6 +54,16 @@ def create_classes(db):
         def __repr__(self):
             return '<Title %r>' % (self.name)
     return Title    
+
+    class Cast(db.Model):
+        __tablename__ = 'cast'
+
+        cast_no = db.Column(db.Integer, primary_key=True)
+        cast = db.Column(db.Varchar)
+
+        def __repr__(self):
+            return '<Cast %r>' % (self.name)
+    return Cast
 
     class Netflix_title_Listed_in(db.Model):
         __tablename__ = 'Netflix_title_Listed_in'
