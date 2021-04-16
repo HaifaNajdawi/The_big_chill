@@ -21,8 +21,6 @@ CREATE TABLE "Title" (
     -- Netflix
     "director" varchar,
     -- Netflix
-    "cast" varchar,
-    -- Netflix
     "country" varchar,
     -- Netflix
     "date_added" date,
@@ -115,7 +113,6 @@ CREATE TABLE "title_cast" (
      )
 );
 
-
 ALTER TABLE "OMDB_title_genre" ADD CONSTRAINT "fk_OMDB_title_genre_omdb_genre_no" FOREIGN KEY("omdb_genre_no")
 REFERENCES "OMDB_genre" ("omdb_genre_no");
 
@@ -133,6 +130,9 @@ REFERENCES "OMDB_language" ("language_no");
 
 ALTER TABLE "OMDB_title_language" ADD CONSTRAINT "fk_OMDB_title_language_show_id" FOREIGN KEY("show_id")
 REFERENCES "Title" ("show_id");
+
+ALTER TABLE "title_cast" ADD CONSTRAINT "fk_title_cast_cast_no" FOREIGN KEY("cast_no")
+REFERENCES "cast" ("cast_no");
 
 ALTER TABLE "title_cast" ADD CONSTRAINT "fk_title_cast_show_id" FOREIGN KEY("show_id")
 REFERENCES "Title" ("show_id");
