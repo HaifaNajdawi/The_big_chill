@@ -28,23 +28,28 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
+# engine=create_engine(os.getenv('DATABASE_URL'))
+conn=engine.connect()
+
+#create tables
+Base.metadata.create_all(conn)
 
 # DATABASE_URL will contain the database connection string: HEROKU
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # # Connects to the database using the app config
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
-netflix_listed_in = create_classes_netflix_listed_in(db)
-netflix_title_listed_in = create_classes_netflix_title_listed_in(db)
-omdb_genre = create_classes_OMDB_genre(db)
-OMDB_language = create_classes_OMDB_language(db)
-OMDB_title_language = create_classes_OMDB_title_language(db)
-OMDB_title_genre = create_classes_OMDB_title_genre(db)
-title = create_classes_title(db)
-cast = create_classes_cast(db)
-title_cast = create_classes_title_cast(db)
+# netflix_listed_in = create_classes_netflix_listed_in(db)
+# netflix_title_listed_in = create_classes_netflix_title_listed_in(db)
+# omdb_genre = create_classes_OMDB_genre(db)
+# OMDB_language = create_classes_OMDB_language(db)
+# OMDB_title_language = create_classes_OMDB_title_language(db)
+# OMDB_title_genre = create_classes_OMDB_title_genre(db)
+# title = create_classes_title(db)
+# cast = create_classes_cast(db)
+# title_cast = create_classes_title_cast(db)
 
 # AUTOMAP
 # reflect an existing database into a new model
@@ -106,22 +111,22 @@ def sources():
 @app.route("/test_db")
 def test_db():
     # Create our session (link) from Python to the DB
-    session = Session(engine)
+    session = Session(bind=engine)
     
-    cast_title_db = session.query(title_cast).all()
+    cast_title_db = session.query(Title_cast).join(Cast, Cast.cast_no == Title_cast.cast_no).all()
     # cast_title_db = (session.query(title_cast, title_cast.cast_no, title_cast.show_id).outerjoin(cast, cast.cast_no == title_cast.cast_no))
-
-    session.close()
 
     # Create a dictionary from the row data and append to a list 
     all_cast_title = []
     
     for i in cast_title_db:
      cast_title_no = {}
-    #  cast_title_no["cast"] = i.cast
+     cast_title_no["cast"] = i.cast
      cast_title_no["cast_no"] = i.show_id
      cast_title_no["show_id"] = i.show_id
      all_cast_title.append(cast_title_no)
+
+     session.close()
 
     return jsonify(all_cast_title)
 
