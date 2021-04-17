@@ -105,23 +105,9 @@ def send_js(path):
     return send_from_directory('static', path)
 
 # Leftover code -- if we want these pages
-@app.route("/members")
+@app.route("/about")
 def members():
-    return render_template("members.html")
-
-@app.route("/sources")
-def sources():
-    return render_template("sources.html")
-
-# @app.route("/timelapse")
-# def timelapse():
-#     details = get_timelapse()
-#     return render_template(
-#         'timelapse.html',
-#         map_id = details[0],
-#         hdr_txt=details[1],
-#         script_txt = details[2]
-#     )
+    return render_template("about.html")
 
 @app.route("/test_db")
 def test_db():
@@ -213,22 +199,33 @@ def infer_tags(q):
     ##convert prediction back to genre
     return multilabel_binarizer.inverse_transform(q_pred)
 
+def infer_rating(q):
+    q = clean_text(q)
+    q = remove_stopwords(q)
+    q_pred = LogRegRating_pipeline.predict([q])
+    return multilabel_binarizer_rating.inverse_transform(q_pred)
+
 ## Load the trained model
 with open('static/data/description_genre.pkl', 'rb') as f:
     multilabel_binarizer, LogReg_pipeline = pickle.load(f)
+with open('static/data/description_rating.pkl', 'rb') as r:
+    multilabel_binarizer_rating, LogRegRating_pipeline = pickle.load(r)
 
 @app.route("/ML")
 def machine_learning():
     plot = ""
+    predictive_output = []
     #get user input 
     plot = request.args.get('plot', type = str)
     if plot != "":
-         predictive_output = infer_tags(plot)
+         predictive_output_genres = infer_tags(plot)
+         predictive_output.append(predictive_output_genres)
          ##uncomment this line if we get the descriptive ratings model working
-        #  predictive_output = infer_rating(plot)
+         predictive_output_rating = infer_rating(plot)
+         predictive_output.append(predictive_output_rating)
     else:
         return("No input found")     
-    
+    print(predictive_output)
     return jsonify(predictive_output)
 
   

@@ -22,11 +22,18 @@ function prediction(title){
     // let genres = ""
     d3.json(url, function(response) {
         var genres = ""
-        for (var i = 0; i < response.length; i++){
-            genres += response[i];
-            
-            console.log("hello d3"+genres)
-        }
+        var rating = ""
+        console.log("This is a response: " + response)
+        // for (var i = 0; i < response.length; i++){
+        //     genres += response[i][0][0];
+        
+        //     console.log("hello d3"+genres)
+        // }
+        genres = response[0][0]
+        rating = response[0][0][1]
+    console.log(typeof(response))        
+        console.log("Rating is : " +rating)
+
     var tableBody = document.getElementById("table-body");
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
