@@ -35,11 +35,16 @@ width: 400px;
 height: 300px;
 object-fit: fill;
 } 
+
 .jumbotron {
 
 border-bottom:1px solid #ff6a00;
 }
-
+.wrap{
+    word-wrap: break-word;
+    min-width: 160px;
+    max-width: 160px;
+}
 /* .container {
     height:400px;
     width:400px;
