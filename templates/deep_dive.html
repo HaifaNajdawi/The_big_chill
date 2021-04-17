@@ -16,7 +16,7 @@
     <!-- Custom styles for this template -->
     <!-- <link href="../static/css/jumbotron.css" rel="stylesheet"> -->
     <link href="../static/css/style.css" rel="stylesheet">
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     
 
 
@@ -26,7 +26,7 @@
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       
-      <a class="navbar-brand" href="index.html">The Big Chill</a>
+      <a class="navbar-brand" href="index">The Big Chill</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -34,10 +34,10 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="deep_dive.html">Deep Dive</a>
+            <a class="nav-link" href="deep_dive">Deep Dive</a>
           </li>
           <!-- <li class="nav-item"> -->
             <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
@@ -68,9 +68,9 @@
                 <div class="col-md-12">
         <form id="form" onSubmit="return false;">
             <div class="form-group">
-                <label>Enter your Movie Title</label>
+                <label>Enter your Movie Plot</label>
                 <!-- TODO - add a character limit -->
-                <input type="text" class="form-control" id="input_title" placeholder="Enter Title" maxlength="50">
+                <input type="text" class="form-control" id="input_title" placeholder="Enter Plot" >
             </div>
             <button id="submit" type="button" class="btn btn-primary">Submit</button>
         </form>
@@ -81,10 +81,9 @@
         
         <table id="mytable" class="table">
             <thead><tr class="tableizer-firstrow">
-                <th>Title</th>
+                <th>Plot</th>
                 <th>Genre</th>
                 <th>Rating</th>
-                <th>Gross Profit</th>
             </tr>
         </thead>
         <tbody id="table-body">
