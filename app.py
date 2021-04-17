@@ -11,6 +11,7 @@ from flask import (
     redirect,
     send_from_directory)
 import numpy as np
+from flask_cors import CORS
 #from config import username, password
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -18,12 +19,24 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 import sys
 from models import *
+
+##Imports used for Machine Learning##
+import nltk
+import re
+import pickle
+from nltk.corpus import stopwords
+from sklearn.preprocessing import MultiLabelBinarizer
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
+
+
 #import boto3
 
 #SQLALCHEMY_DATABASE_URI = os.getenv('THE_BIG_CHILL_DATABASE_URL') 
 SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://roo2:123456@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
 
 app = Flask(__name__)
+CORS(app)
 #################################################
 # Database Setup
 #################################################
@@ -130,8 +143,7 @@ def test_db():
 
     return jsonify(all_cast_title)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 # @app.after_request
 # def add_header(r):
@@ -167,3 +179,56 @@ if __name__ == '__main__':
 # @register_menu(app, '.second', 'Second', order=1)
 # def second():
 #     return tmpl_show_menu()
+
+###########################################
+## Definitions used for Machine Learning ##
+###########################################
+
+##remove commonly used words that are not good for training
+def remove_stopwords(text):
+    no_stopword_text = [w for w in text.split() if not w in stop_words]
+    return ' '.join(no_stopword_text)
+
+def clean_text(text):
+    # remove backslash-apostrophe 
+    text = re.sub("\'", "", text) 
+    # remove everything except alphabets 
+    text = re.sub("[^a-zA-Z]"," ",text) 
+    # remove whitespaces 
+    text = ' '.join(text.split()) 
+    # convert text to lowercase 
+    text = text.lower() 
+    return text
+
+## clean user input and return prediction
+def infer_tags(q):
+    ##lower case and remove non alpha
+    q = clean_text(q)
+    ##remove junk words
+    q = remove_stopwords(q)
+    ##PREDICT
+    q_pred = LogReg_pipeline.predict([q])
+    ##convert prediction back to genre
+    return multilabel_binarizer.inverse_transform(q_pred)
+
+## Load the trained model
+with open('static/data/description_genre.pkl', 'rb') as f:
+    multilabel_binarizer, LogReg_pipeline = pickle.load(f)
+
+@app.route("/ML")
+def machine_learning():
+    plot = ""
+    #get user input 
+    plot = request.args.get('plot', type = str)
+    if plot != "":
+         predictive_output = infer_tags(plot)
+         ##uncomment this line if we get the descriptive ratings model working
+        #  predictive_output = infer_rating(plot)
+    else:
+        return("No input found")     
+    
+    return jsonify(predictive_output)
+
+  
+if __name__ == '__main__':
+    app.run(debug=True)
