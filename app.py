@@ -36,6 +36,8 @@ stop_words = set(stopwords.words('english'))
 SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://roo2:123456@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
+
 CORS(app)
 #################################################
 # Database Setup
@@ -51,39 +53,39 @@ Base.metadata.create_all(conn)
 # from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# # Connects to the database using the app config
-# db = SQLAlchemy(app)
+def confg():
+    engine = create_engine(
+        "postgres+psycopg2://{username}:{password}@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres")
+    Base = automap_base()
+    Base.prepare(engine, reflect=True)
+    Base.classes.keys()
+    session = Session(engine)
 
-# netflix_listed_in = create_classes_netflix_listed_in(db)
-# netflix_title_listed_in = create_classes_netflix_title_listed_in(db)
-# omdb_genre = create_classes_OMDB_genre(db)
-# OMDB_language = create_classes_OMDB_language(db)
-# OMDB_title_language = create_classes_OMDB_title_language(db)
-# OMDB_title_genre = create_classes_OMDB_title_genre(db)
-# title = create_classes_title(db)
-# cast = create_classes_cast(db)
-# title_cast = create_classes_title_cast(db)
+    return Base,session
 
-# AUTOMAP
-# reflect an existing database into a new model
-# Base = automap_base()
-# reflect the tables
-# Base.prepare(engine=engine, reflect=True)
 
-# new table references
-# Base.classes.keys()
+@app.route('/title', methods=['GET'])
+def title():
+    Base,session= confg()
+    titles=Base.classes.Title
+    title_sql=session.query(titles).all()
+    list=[]
+    for i in title_sql:
+        feature_dict={}
+        feature_dict["title"]=i.title
+        feature_dict["rating"]=i.rating
+        feature_dict["imdb_rating"]=i.imdbrating
+        feature_dict["description"]=i.description
+        feature_dict["type"]=i.type
+        feature_dict["country"]=i.country
+        feature_dict["poster"]=i.poster
+        list.append(feature_dict)
+    title_dict={}
+    title_dict["netflix"]=list
+    return title_dict
 
-# netflix_listed_in = Base.classes.Netflix_Listed_in
-# netflix_title_listed_in = Base.classes.Netflix_title_Listed_in
-# omdb_genre = Base.classes.OMDB_genre
-# OMDB_language = Base.classes.OMDB_language
-# OMDB_title_language = Base.classes.OMDB_title_language
-# OMDB_title_genre = Base.classes.OMDB_title_genre
-# title = Base.classes.Title
-# Cast = Base.classes.Cast
-# title_cast = Base.classes.title_cast
 
-# @app.route('/', methods=['GET', 'POST'])
+
 # @app.route('/index', methods=['GET', 'POST'])
 
 @app.route("/")
