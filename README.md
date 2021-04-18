@@ -3,7 +3,7 @@
 ## Project to apply Machine Learning (ML) to Netflix tv shows & movies
 **APPLICATION PURPOSE: Do you have a TV show or movie about to premier on Netflix!?!**  
 - The description of your tv show or movie is an important part of the information people are presented with when scrolling through the numerous options to select as they sit back to “Netflix & chill”.
-- User can enter tv show or movie description to predict that description’s rating & OMDB genre. Machine Learning](#machine-learning)
+- User can enter tv show or movie description to predict that description’s rating & OMDB genre. [Machine Learning](#machine-learning)
 >- This application can help you optimize the description you supply Netflix to ensure the person picks the expected genre & movie rating of your movie or tv show.
 >- Underlying Database provides a way to explore/analyze the Netflix shows and movies by genre and rating to find something to watch on Netflix.  Data manipulated through ML to identify similar content by matching text-based features. [Data Source Detail](#data-sources)
 - [Team Members](#team-members)
