@@ -29,8 +29,8 @@ function prediction(title){
         
         //     console.log("hello d3"+genres)
         // }
-        genres = response[0][0]
-        rating = response[0][0][1]
+        genres += response[0][0]
+        rating += response[1][0]
     console.log(typeof(response))        
         console.log("Rating is : " +rating)
 

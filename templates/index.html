@@ -18,9 +18,16 @@
     <link href="../static/css/style.css" rel="stylesheet">
 
 
+
   </head>
 
   <body>
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="index">The Big Chill</a>
@@ -30,23 +37,15 @@
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link active" href="index">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="deep_dive">Deep Dive</a>
           </li>
-          <!-- <li class="nav-item"> -->
-            <!-- <a class="nav-link disabled" href="#">Disabled</a> -->
-          <!-- </li> -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Members</a>
-              <a class="dropdown-item" href="#">Sources</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="about">About</a>
+          </li>
       </div>
     </nav>
 
@@ -61,22 +60,25 @@
         <!-- Example row of columns -->
         <div class="container">
         <div class="row">
-          <div class="col-xl-6" id="bar">
-            <h2>Container for a graph</h2>
-             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          <div class="col-xl-4">
+            <h2 class="text-center">Genre Diversity</h2>
+            <img id="genre" class="container-fluid no-padding graph" src="/static/image/genres_on_omdb.png" alt="Genre Diversity">
+             <p>We found a total of 28 genres in this dataset to train against.  The most common genre is Drama, which causes our predictions to be a bit unbalanced </p>
+
           </div>
-          <div class="col-xl-6" id="bubble">
-            <h2>Container for Favorite words</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          <div class="col-xl-4">
+            <h2 class="text-center">Rating Diversity</h2>
+            <img  id="rating" class="container-fluid no-padding graph" src="/static/image/shows_movies_rating.png" alt="Rating Diversity">
+            <p>There are a massive amounts of TV shows presented on Netflix. This is no surprise, as there are many Netflix original shows to watch.  Our prediction model can help navigate towards the right genre for you </p>
+
           </div>
-        </div>
-          <div class="row">
-            <div class="col-md-12" id="pie">
-              <h2>Container for something else</h2>
-              <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-              <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <!-- </div>
+          <div class="row"> -->
+            <div class="col-md-4">
+              <h2 class="text-center">Common Description Words</h2>
+              <img id="words" class="container-fluid no-padding graph" src="/static/image/word_count.png" alt="Common Description Words">
+              <p>Finding the right words to train your machine on is key.  Picking valuable words like"young" will give more desirable results rather than "the"</p>
+
             </div>
           </div>
  
