@@ -10,7 +10,7 @@ numpy
 typing
 flask_cors
 nltk
-re
+re == 3.9.4
 pickle
 stopwords
 MultiLabelBinarizer
