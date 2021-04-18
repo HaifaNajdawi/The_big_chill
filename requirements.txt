@@ -11,6 +11,7 @@ typing
 flask_cors
 nltk
 # re == 2021.4.4
-pickle
-stopwords
-MultiLabelBinarizer
+# pickle
+# stopwords
+scikit-learn
+# MultiLabelBinarizer
