@@ -6,8 +6,8 @@
 - User can enter tv show or movie description to predict that description’s rating & OMDB genre. Machine Learning](#machine-learning)
 >- This application can help you optimize the description you supply Netflix to ensure the person picks the expected genre & movie rating of your movie or tv show.
 >- Underlying Database provides a way to explore/analyze the Netflix shows and movies by genre and rating to find something to watch on Netflix.  Data manipulated through ML to identify similar content by matching text-based features. [Data Source Detail](#data-sources)
-* [Team Members](#team-members)
-*[Technologies Used](#technologies-used)
+- [Team Members](#team-members)
+- [Technologies Used](#technologies-used)
 
 ![Database Model](static/images/Database_Model.png)    **STILL NEED TO ADD database model**
 
@@ -59,7 +59,7 @@
 >- **Julia Headlee**  [Git Hub: julieheadlee](https://github.com/julieheadlee) Responsibility: Flask
 >- **Melanie Nolker** [Git Hub: mnolker](https://github.com/mnolker) - Responsibility: Database ETL & project documentation
 
-## ** Technologies Used **
+## **Technologies Used **
 >-flask
 >-flask_cors
 >-matplotlib
