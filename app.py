@@ -32,8 +32,8 @@ stop_words = set(stopwords.words('english'))
 
 #import boto3
 
-#SQLALCHEMY_DATABASE_URI = os.getenv('THE_BIG_CHILL_DATABASE_URL') 
-SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://{username}:{password}@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
+SQLALCHEMY_DATABASE_URI = os.getenv('THE_BIG_CHILL_DATABASE_URL') 
+# SQLALCHEMY_DATABASE_URI = "postgres+psycopg2://{username}:{password}@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres"
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
@@ -54,8 +54,7 @@ Base.metadata.create_all(conn)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 def confg():
-    engine = create_engine(
-        "postgres+psycopg2://{username}:{password}@netflix.cy8gt7mz64dd.us-east-2.rds.amazonaws.com:5432/postgres")
+    engine = create_engine(SQLALCHEMY_DATABASE_URI)
     Base = automap_base()
     Base.prepare(engine, reflect=True)
     Base.classes.keys()
