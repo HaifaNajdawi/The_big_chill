@@ -8,6 +8,7 @@
 >- Underlying Database provides a way to explore/analyze the Netflix shows and movies by genre and rating to find something to watch on Netflix.  Data manipulated through ML to identify similar content by matching text-based features. 
 
 - **Table of Contents:**
+>- [Application Diagram](#Application-Diagram)
 >- [Machine Learning](#machine-learning)
 >- [Flask](#flask)
 >- [Heroku Deployment](#heroku-deployment)
@@ -18,7 +19,7 @@
 >- [Technologies Used](#technologies-used)
 
 ## **Application Diagram**
-![Database Model](static/images/Database_Model.png)    **STILL NEED TO ADD database model**
+![App Diagram](static/image/App_Diagram.png)    **STILL NEED TO ADD database model**
 
 ## **Machine Learning**
 - Machine Learning (ML) library used = OneVsRestClassifier (sklearn.multiclass)
