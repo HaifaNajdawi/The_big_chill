@@ -19,7 +19,7 @@
 >- [Technologies Used](#technologies-used)
 
 ## **Application Diagram**
-![App Diagram](static/image/App_Diagram.png)    **STILL NEED TO ADD database model**
+![App Diagram](static/image/App_Diagram.png)
 
 ## **Machine Learning**
 - Machine Learning (ML) library used = OneVsRestClassifier (sklearn.multiclass)
