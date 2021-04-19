@@ -3,32 +3,65 @@
 ## Project to apply Machine Learning (ML) to Netflix tv shows & movies
 **APPLICATION PURPOSE: Do you have a TV show or movie about to premier on Netflix!?!**  
 - The description of your tv show or movie is an important part of the information people are presented with when scrolling through the numerous options to select as they sit back to “Netflix & chill”.
-- User can enter tv show or movie description to predict that description’s rating & OMDB genre. [Machine Learning](#machine-learning)
+- User can enter tv show or movie description to predict that description’s rating & OMDB genre. 
 >- This application can help you optimize the description you supply Netflix to ensure the person picks the expected genre & movie rating of your movie or tv show.
->- Underlying Database provides a way to explore/analyze the Netflix shows and movies by genre and rating to find something to watch on Netflix.  Data manipulated through ML to identify similar content by matching text-based features. [Data Source Detail](#data-sources)
-- [Team Members](#team-members)
-- [Technologies Used](#technologies-used)
+>- Underlying Database provides a way to explore/analyze the Netflix shows and movies by genre and rating to find something to watch on Netflix.  Data manipulated through ML to identify similar content by matching text-based features. 
 
+- **Table of Contents:**
+>- [Machine Learning](#machine-learning)
+>- [Flask](#flask)
+>- [Heroku Deployment](#heroku-deployment)
+>- [Other Data Analysis](#Other-Data-Analysis)
+>- [Extract Transform Load (ETL)](#Data-Extract-Transform-Load-(ETL))
+>- [Data Sources](#data-sources)
+>- [Team Members](#team-members)
+>- [Technologies Used](#technologies-used)
+
+## **Application Diagram**
 ![Database Model](static/images/Database_Model.png)    **STILL NEED TO ADD database model**
 
-## **Machine Learning (ML)**
-- **OTHER machine learning text HERE**
-- ML library used = OneVsRestClassifier (sklearn.multiclass)
-- TV Show or Movie Description is input to predict one of 28 OMDB genre & the rating
+## **Machine Learning**
+- Machine Learning (ML) library used = OneVsRestClassifier (sklearn.multiclass)
+- TV Show or Movie Description is input to predict one of
+>>- 28 OMDB genre (The most common genre is Drama, which causes our predictions to be a bit unbalanced):
+>> ![genres_on_omdb](static/image/genres_on_omdb.png) 
+>>- Grouped to 5 ratings = G, PG, PG-13, R, NC-17:
+>>>- Grouped to G: ‘TV-Y7’ , ’TV-G’ , ’TV-Y’ , ’TV-Y7-FV’
+>>>- Grouped to R: 'TV-MA’ & 'R'
+>> ![shows_movies_rating](static/image/shows_movies_rating.png) 
 - Common Description Words:  Finding the right words to train your machine on is key. 
+>> ![wordcloud_description](static/image/wordcloud_description.png)
+>> ![word_count](static/image/word_count.png)
 >- Picking valuable words like "young" will give more desirable results rather than "the"
 >- Library nltk.corpus used to remove ‘standard’ stopwords (top words removed = a, the, to, and)
-- trained on 99% data due to limited records
-- **OTHER machine learning text HERE**
+>> ![stop_words](static/image/stop_words.png) 
+- trained genre on 99% of the data & ratings on 88% of the data; train %s high due to limited records
+- Saved model to refrence model through Flask using Pickle
+- Predictive Accuracy for genre = 43.5%
+- Predictive Accuracy for ratings = 35.2% 
 
-## **Data Sources**
-- Database
->- Public Domain Netflix Movies and TV Shows csv file from Kaggle: https://www.kaggle.com/shivamb/netflix-shows (This dataset consists of tv shows and movies available on Netflix as of 2019)
->- OMDB API http://www.omdbapi.com/
-- Other
->- Netflix Research data: https://www.businessofapps.com/data/netflix-statistics/
+## **Flask**
+- Saved machine learning (ML) model & referenced in Flask using Pickle (.pkl)
+- Used Pandas to merge datbase tables as needed to pull data from Postgresql database
+- FireFox application utilized to develop API in order to render the data to the HTML
 
-## **Data Cleanup and Analysis (ETL)**
+## **Heroku Deployment**
+- Use rquirements text file to load only the python libraries used in the app (ie make sure included Pickle)
+- Limited to 10,000 records for Heroku database, used AWS RDS for database server
+- Add config with user name & password in Heroku & create variable to reference in app.py Flask to keep senstive information masked
+- Deploy using Gethub master branch
+- Include 'Procfile' in repository to connect to Heroku app (web: gunicorn app:app)
+- Deployed site address: https://the-big-chill.herokuapp.com/
+
+## **Other Data Analysis**
+> ![movies_vs_shows](static/image/movies_vs_shows.png) 
+> ![movies_vs_shows_by_year](static/image/movies_vs_shows_by_year.png) 
+> ![actors_movies](static/image/actores_movies.png) 
+> ![actors_tv_shows](static/image/actors_tv_shows.png) 
+> ![top_directors](static/image/top_directores.png) 
+> ![top_listed_in](static/image/top_listed_in.png) 
+
+## **Data Extract Transform Load (ETL)**
 ### ETL Summary
 - Extract - We will be using two datasets. We are using a Netflix Movies and TV Shows csv file from Kaggle and using the OMDB API (OMDBAPI.com).
 - Transform -  We will pull from the OMDB API titles, ratings, genres, etc. and using the csv netflix file, denoting if the title is in Netflix.
@@ -49,34 +82,43 @@
 
 ### **L**oad
 - The database schema is shown below in the image. We used the main merged "Title" table and then had a OMDB_genre and netflix_genre table along with their junction tables. 
-- ![Database Schema](static/data/database_schema.png)
+>> ![Database Schema](static/image/database_schema.png)
 - The database and tables were initially set up in PostgreSQL, a relational database, since our data was consistent and so we were able to relate tables to make it easier to query.
-- The Transform_Load.ipynb file loads the table data into the tables in PostgreSQL.
+- The Transform_Load.ipynb file loads the table data into the tables into PostgreSQL
+- PostgreSQL was then connected to AWS RDS (for deployement beyond local host).
+
+## **Data Sources**
+- Database
+>- Public Domain Netflix Movies and TV Shows csv file from Kaggle: https://www.kaggle.com/shivamb/netflix-shows (This dataset consists of tv shows and movies available on Netflix as of 2019)
+>- OMDB API http://www.omdbapi.com/
+- Other
+>- Netflix Research data: https://www.businessofapps.com/data/netflix-statistics/
 
 ## **Team Members**
->- **April Lagnevall** [Git Hub: alagnevall](https://github.com/alagnevall)  - Responsibility: HTML/CSS build, Genre predict ML model, js and D3 build to enable ML model in app
->- **Haifa Najdawi** [Git Hub: HaifaNajdawi](https://github.com/HaifaNajdawi)  - Responsibility: Data visualizations & analysis, Machine Learning, API build, AWS RDS set up, and Heroku Deployment
->- **Julia Headlee**  [Git Hub: julieheadlee](https://github.com/julieheadlee) Responsibility: Flask
->- **Melanie Nolker** [Git Hub: mnolker](https://github.com/mnolker) - Responsibility: Database ETL & project documentation
+>- **April Lagnevall** [alagnevall](https://github.com/alagnevall)  - Responsibility: HTML/CSS build, Genre predict ML model, js and D3 build to enable ML model in app
+>- **Haifa Najdawi** [HaifaNajdawi](https://github.com/HaifaNajdawi)  - Responsibility: Data visualizations & analysis, Machine Learning, API build, AWS RDS set up, and Heroku Deployment
+>- **Julia Headlee**  [julieheadlee](https://github.com/julieheadlee) Responsibility: Flask, Ratings predict ML model, js and D3 build to enable ML model in app
+>- **Melanie Nolker** [mnolker](https://github.com/mnolker) - Responsibility: Database ETL & project documentation
 
-## **Technologies Used **
->-flask
->-flask_cors
->-matplotlib
->-models
->-nltk
->-numpy
->-os
->-pandas
->-pickle
->-pprint
->-psycopg2
->-re
->-seaborn
->-sklearn
->-sqlalchemy
->-tqdm
->-typing
->-bootstrap
->-jquery
->-js.d3
+## **Technologies Used**
+>>- flask
+>>- flask_cors
+>>- matplotlib
+>>- models
+>>- nltk
+>>- numpy
+>>- wordcloud
+>>- os
+>>- pandas
+>>- pickle
+>>- pprint
+>>- psycopg2
+>>- re
+>>- seaborn
+>>- sklearn
+>>- sqlalchemy
+>>- tqdm
+>>- typing
+>>- bootstrap
+>>- jquery
+>>- js.d3
